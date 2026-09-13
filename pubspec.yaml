@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+name: gym_flow
+=======
 name: gym_app
+>>>>>>> 3d99cde31f7dea67644620c829980e1604b73707
 description: Aplikasi manajemen gym (Owner/Admin/Staf) - Web & Android
 publish_to: 'none'
 version: 0.1.0
