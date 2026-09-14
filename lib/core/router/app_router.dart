@@ -12,6 +12,11 @@ import '../../features/members/presentation/members_screen.dart';
 import '../../features/packages/domain/membership_package.dart';
 import '../../features/packages/presentation/package_form_screen.dart';
 import '../../features/packages/presentation/packages_screen.dart';
+import '../../features/checkin/presentation/checkin_screen.dart';
+import '../../features/classes/domain/class_schedule.dart';
+import '../../features/classes/presentation/class_detail_screen.dart';
+import '../../features/classes/presentation/class_form_screen.dart';
+import '../../features/classes/presentation/classes_screen.dart';
 
 /// Setiap route yang butuh proteksi didaftarkan dengan featureKey-nya,
 /// dicocokkan ke UserRoleX.canAccess().
@@ -75,6 +80,24 @@ final routerProvider = Provider<GoRouter>((ref) {
           existingPackage: state.extra as MembershipPackage?,
         ),
       ),
+      GoRoute(path: '/checkin', builder: (context, state) => const CheckinScreen()),
+      GoRoute(path: '/classes', builder: (context, state) => const ClassesScreen()),
+      GoRoute(
+        path: '/classes/:id',
+        builder: (context, state) => ClassDetailScreen(
+          schedule: state.extra as ClassSchedule,
+        ),
+      ),
+      GoRoute(
+        path: '/class-management/new',
+        builder: (context, state) => const ClassFormScreen(),
+      ),
+      GoRoute(
+        path: '/class-management/:id',
+        builder: (context, state) => ClassFormScreen(
+          existingClass: state.extra as ClassSchedule?,
+        ),
+      ),
       // Tambahkan route modul lain di sini, contoh:
       // GoRoute(path: '/staff-management', builder: (context, state) => const StaffManagementScreen()),
     ],
@@ -90,6 +113,8 @@ String? _featureKeyFor(String path) {
     '/packages': 'packages',
     '/payments': 'payments',
     '/classes-schedule': 'classes_schedule',
+    '/classes': 'classes_view',
+    '/class-management': 'classes_schedule',
     '/reports/operational': 'reports_operational',
     '/checkin': 'checkin',
   };

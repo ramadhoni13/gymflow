@@ -32,8 +32,10 @@ class DashboardScreen extends ConsumerWidget {
               _MenuTile('Member', Icons.people, () => context.push('/members')),
             if (role.canAccess('packages'))
               _MenuTile('Paket Membership', Icons.card_membership, () => context.push('/packages')),
-            if (role.canAccess('checkin')) _MenuTile('Check-in', Icons.qr_code_scanner, () {}),
-            if (role.canAccess('classes_view')) _MenuTile('Jadwal Kelas', Icons.calendar_month, () {}),
+            if (role.canAccess('checkin'))
+              _MenuTile('Check-in', Icons.qr_code_scanner, () => context.push('/checkin')),
+            if (role.canAccess('classes_view'))
+              _MenuTile('Jadwal Kelas', Icons.calendar_month, () => context.push('/classes')),
             if (role.canAccess('payments')) _MenuTile('Pembayaran', Icons.payments, () {}),
             if (role.canAccess('reports_operational')) _MenuTile('Laporan Operasional', Icons.bar_chart, () {}),
             if (role.canAccess('staff_management')) _MenuTile('Manajemen Staf', Icons.badge, () {}),

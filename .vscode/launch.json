@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "gym_flow (Chrome)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "args": [
+        "--dart-define=SUPABASE_URL=https://iyqpjlsbvntgeqaotngd.supabase.co",
+        "--dart-define=SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5cXBqbHNidm50Z2VxYW90bmdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMTgwNTIsImV4cCI6MjEwNDY5NDA1Mn0.x5HrD_YbopofkEb3WWzquvprjqxVOLYNc5dNx7l5x7I"
+      ]
+    }
+  ]
+}
