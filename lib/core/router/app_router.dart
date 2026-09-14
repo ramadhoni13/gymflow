@@ -17,6 +17,8 @@ import '../../features/classes/domain/class_schedule.dart';
 import '../../features/classes/presentation/class_detail_screen.dart';
 import '../../features/classes/presentation/class_form_screen.dart';
 import '../../features/classes/presentation/classes_screen.dart';
+import '../../features/payments/presentation/payments_screen.dart';
+import '../../features/payments/presentation/payment_form_screen.dart';
 
 /// Setiap route yang butuh proteksi didaftarkan dengan featureKey-nya,
 /// dicocokkan ke UserRoleX.canAccess().
@@ -98,6 +100,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           existingClass: state.extra as ClassSchedule?,
         ),
       ),
+      GoRoute(path: '/payments', builder: (context, state) => const PaymentsScreen()),
+      GoRoute(path: '/payments/new', builder: (context, state) => const PaymentFormScreen()),
       // Tambahkan route modul lain di sini, contoh:
       // GoRoute(path: '/staff-management', builder: (context, state) => const StaffManagementScreen()),
     ],

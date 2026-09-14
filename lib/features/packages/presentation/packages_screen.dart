@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../data/package_provider.dart';
 import '../domain/membership_package.dart';
-import '../shared/format_rupiah.dart';
+import '../../../shared/format_rupiah.dart';
 
 class PackagesScreen extends ConsumerWidget {
   const PackagesScreen({super.key});

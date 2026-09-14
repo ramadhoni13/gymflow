@@ -42,4 +42,14 @@ class MemberRepository {
   Future<void> deleteMember(String id) async {
     await _client.from(_table).delete().eq('id', id);
   }
+
+  /// Update HANYA kolom membership_end_date, dipakai saat pembayaran baru
+  /// dicatat di modul Payments — supaya tidak perlu kirim ulang seluruh data
+  /// member yang tidak berubah.
+  Future<void> extendMembership({required String memberId, required DateTime newEndDate}) async {
+    await _client
+        .from(_table)
+        .update({'membership_end_date': newEndDate.toIso8601String()})
+        .eq('id', memberId);
+  }
 }
