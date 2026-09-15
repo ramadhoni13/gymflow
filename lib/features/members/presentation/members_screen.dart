@@ -94,7 +94,7 @@ class _MemberTile extends StatelessWidget {
     final (label, color) = switch (member.status) {
       MembershipStatus.active => ('Aktif', Colors.green),
       MembershipStatus.expiringSoon => ('Segera Habis', Colors.orange),
-      MembershipStatus.expired => ('Kadaluarsa', Colors.red),
+      MembershipStatus.expired => ('Kedaluwarsa', Colors.red),
     };
 
     return ListTile(

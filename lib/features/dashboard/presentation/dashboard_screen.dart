@@ -38,10 +38,14 @@ class DashboardScreen extends ConsumerWidget {
               _MenuTile('Jadwal Kelas', Icons.calendar_month, () => context.push('/classes')),
             if (role.canAccess('payments'))
               _MenuTile('Pembayaran', Icons.payments, () => context.push('/payments')),
-            if (role.canAccess('reports_operational')) _MenuTile('Laporan Operasional', Icons.bar_chart, () {}),
+            if (role.canAccess('reports_operational'))
+              _MenuTile('Laporan Operasional', Icons.bar_chart,
+                  () => context.push('/reports/operational')),
             if (role.canAccess('staff_management'))
               _MenuTile('Manajemen Staf', Icons.badge, () => context.push('/staff-management')),
-            if (role.canAccess('reports_financial')) _MenuTile('Laporan Keuangan', Icons.account_balance_wallet, () {}),
+            if (role.canAccess('reports_financial'))
+              _MenuTile('Laporan Keuangan', Icons.account_balance_wallet,
+                  () => context.push('/reports/financial')),
             if (role.canAccess('gym_settings')) _MenuTile('Pengaturan Gym', Icons.settings, () {}),
           ],
         ],
