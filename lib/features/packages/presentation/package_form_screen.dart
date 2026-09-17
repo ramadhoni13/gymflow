@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../data/package_provider.dart';
 import '../domain/membership_package.dart';
 import '../../../shared/format_rupiah.dart';
+import '../../../core/theme/app_theme.dart';
 
 class PackageFormScreen extends ConsumerStatefulWidget {
   final MembershipPackage? existingPackage;
@@ -208,7 +209,7 @@ class _PackageFormScreenState extends ConsumerState<PackageFormScreen> {
                 child: formState.isLoading
                     ? const SizedBox(
                         height: 18, width: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.ink),
                       )
                     : Text(_isNew ? 'Simpan Paket' : 'Simpan Perubahan'),
               ),

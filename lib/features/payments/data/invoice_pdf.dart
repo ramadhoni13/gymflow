@@ -3,8 +3,13 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import '../domain/payment.dart';
 import '../../../shared/format_rupiah.dart';
+import '../../settings/domain/gym_settings.dart';
 
-Future<Uint8List> buildInvoicePdf(Payment payment) async {
+/// [gymSettings] opsional — kalau di-isi, invoice akan menampilkan kop
+/// (nama gym, alamat, WhatsApp) dan info rekening/QRIS di bagian bawah.
+/// Kalau null, invoice tetap dibuat tapi tanpa info gym (mis. kalau modul
+/// Pengaturan Gym belum diisi Owner).
+Future<Uint8List> buildInvoicePdf(Payment payment, {GymSettings? gymSettings}) async {
   final doc = pw.Document();
 
   doc.addPage(
@@ -16,6 +21,16 @@ Future<Uint8List> buildInvoicePdf(Payment payment) async {
           child: pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
+              if (gymSettings != null && gymSettings.gymName.isNotEmpty) ...[
+                pw.Text(gymSettings.gymName,
+                    style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+                if (gymSettings.address != null && gymSettings.address!.isNotEmpty)
+                  pw.Text(gymSettings.address!, style: const pw.TextStyle(fontSize: 9)),
+                if (gymSettings.whatsappNumber != null && gymSettings.whatsappNumber!.isNotEmpty)
+                  pw.Text('WhatsApp: ${gymSettings.whatsappNumber}',
+                      style: const pw.TextStyle(fontSize: 9)),
+                pw.SizedBox(height: 12),
+              ],
               pw.Text('INVOICE', style: pw.TextStyle(fontSize: 22, fontWeight: pw.FontWeight.bold)),
               pw.SizedBox(height: 4),
               pw.Text(payment.invoiceNumber, style: const pw.TextStyle(fontSize: 12)),
@@ -42,7 +57,24 @@ Future<Uint8List> buildInvoicePdf(Payment payment) async {
                 pw.SizedBox(height: 16),
                 pw.Text('Catatan: ${payment.notes}', style: const pw.TextStyle(fontSize: 10)),
               ],
-              pw.SizedBox(height: 32),
+              if (gymSettings != null &&
+                  ((gymSettings.bankName?.isNotEmpty ?? false) ||
+                      (gymSettings.qrisMerchantName?.isNotEmpty ?? false))) ...[
+                pw.SizedBox(height: 20),
+                pw.Divider(height: 1),
+                pw.SizedBox(height: 8),
+                pw.Text('Info Pembayaran Transfer/QRIS:',
+                    style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold)),
+                if ((gymSettings.bankName?.isNotEmpty ?? false))
+                  pw.Text(
+                    '${gymSettings.bankName} ${gymSettings.bankAccountNumber ?? ''} a.n. ${gymSettings.bankAccountHolder ?? ''}',
+                    style: const pw.TextStyle(fontSize: 9),
+                  ),
+                if ((gymSettings.qrisMerchantName?.isNotEmpty ?? false))
+                  pw.Text('QRIS a.n. ${gymSettings.qrisMerchantName}',
+                      style: const pw.TextStyle(fontSize: 9)),
+              ],
+              pw.SizedBox(height: 20),
               pw.Text('Terima kasih atas pembayaran Anda.', style: const pw.TextStyle(fontSize: 10)),
             ],
           ),

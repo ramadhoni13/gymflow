@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../data/staff_provider.dart';
+import '../../../core/theme/app_theme.dart';
 
 class StaffFormScreen extends ConsumerStatefulWidget {
   const StaffFormScreen({super.key});
@@ -90,7 +91,7 @@ class _StaffFormScreenState extends ConsumerState<StaffFormScreen> {
                 child: actionState.isLoading
                     ? const SizedBox(
                         height: 18, width: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.ink))
                     : const Text('Buat Akun'),
               ),
             ],

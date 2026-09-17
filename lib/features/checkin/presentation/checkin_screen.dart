@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/checkin_provider.dart';
 import '../domain/check_in.dart';
 import '../../members/domain/member.dart';
+import '../../../core/theme/app_theme.dart';
 
 class CheckinScreen extends ConsumerWidget {
   const CheckinScreen({super.key});
@@ -71,9 +72,9 @@ class _MemberSearchTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final actionState = ref.watch(checkinActionControllerProvider);
     final (label, color) = switch (member.status) {
-      MembershipStatus.active => ('Aktif', Colors.green),
-      MembershipStatus.expiringSoon => ('Segera Habis', Colors.orange),
-      MembershipStatus.expired => ('Kedaluwarsa', Colors.red),
+      MembershipStatus.active => ('Aktif', AppColors.statusActive),
+      MembershipStatus.expiringSoon => ('Segera Habis', AppColors.statusWarning),
+      MembershipStatus.expired => ('Kedaluwarsa', AppColors.statusDanger),
     };
 
     return ListTile(
@@ -82,7 +83,7 @@ class _MemberSearchTile extends ConsumerWidget {
       trailing: FilledButton(
         onPressed: actionState.isLoading ? null : () => _handleCheckIn(context, ref),
         style: FilledButton.styleFrom(
-          backgroundColor: member.status == MembershipStatus.expired ? Colors.grey : color,
+          backgroundColor: member.status == MembershipStatus.expired ? AppColors.surfaceVariant : color,
         ),
         child: const Text('Check-in'),
       ),
@@ -154,7 +155,7 @@ class _TodayCheckinList extends ConsumerWidget {
                       itemBuilder: (context, index) {
                         final c = checkins[index];
                         return ListTile(
-                          leading: const Icon(Icons.check_circle, color: Colors.green),
+                          leading: const Icon(Icons.check_circle, color: AppColors.statusActive),
                           title: Text(c.memberName),
                           trailing: Text(_formatTime(c.checkedInAt)),
                         );

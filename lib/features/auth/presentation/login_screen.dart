@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/auth_provider.dart';
+import '../../../core/theme/app_theme.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -13,6 +14,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -31,40 +33,93 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     return Scaffold(
       body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 400),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Form(
-              key: _formKey,
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 420),
+            child: Padding(
+              padding: const EdgeInsets.all(32),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Gym Management', style: Theme.of(context).textTheme.headlineSmall),
-                  const SizedBox(height: 24),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(labelText: 'Email'),
-                    validator: (v) => (v == null || v.isEmpty) ? 'Email wajib diisi' : null,
+                  // Wordmark: garis emas tipis sebagai satu-satunya aksen
+                  // dekoratif di halaman ini — bukan gradient/ikon besar.
+                  Container(width: 40, height: 2, color: AppColors.gold),
+                  const SizedBox(height: 20),
+                  Text(
+                    'GYM MANAGEMENT',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          letterSpacing: 1.2,
+                        ),
+                    textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(labelText: 'Password'),
-                    obscureText: true,
-                    validator: (v) => (v == null || v.isEmpty) ? 'Password wajib diisi' : null,
+                  const SizedBox(height: 6),
+                  const Text(
+                    'Portal khusus pengelola',
+                    style: TextStyle(color: AppColors.muted, fontSize: 13),
                   ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: isLoading ? null : _submit,
-                      child: isLoading
-                          ? const SizedBox(
-                              height: 18, width: 18,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : const Text('Masuk'),
+                  const SizedBox(height: 40),
+                  Container(
+                    padding: const EdgeInsets.all(28),
+                    decoration: BoxDecoration(
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: AppColors.surfaceVariant),
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            controller: _emailController,
+                            decoration: const InputDecoration(labelText: 'Email'),
+                            style: const TextStyle(color: AppColors.ivory),
+                            validator: (v) =>
+                                (v == null || v.isEmpty) ? 'Email wajib diisi' : null,
+                          ),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscurePassword
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  color: AppColors.muted,
+                                  size: 20,
+                                ),
+                                onPressed: () =>
+                                    setState(() => _obscurePassword = !_obscurePassword),
+                              ),
+                            ),
+                            style: const TextStyle(color: AppColors.ivory),
+                            obscureText: _obscurePassword,
+                            onFieldSubmitted: (_) => _submit(),
+                            validator: (v) =>
+                                (v == null || v.isEmpty) ? 'Password wajib diisi' : null,
+                          ),
+                          const SizedBox(height: 24),
+                          SizedBox(
+                            width: double.infinity,
+                            child: FilledButton(
+                              onPressed: isLoading ? null : _submit,
+                              child: isLoading
+                                  ? const SizedBox(
+                                      height: 18,
+                                      width: 18,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: AppColors.ink,
+                                      ),
+                                    )
+                                  : const Text('Masuk'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

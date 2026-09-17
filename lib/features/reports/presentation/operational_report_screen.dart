@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../data/reports_provider.dart';
 import '../domain/report_models.dart';
+import '../../../core/theme/app_theme.dart';
 
 class OperationalReportScreen extends ConsumerWidget {
   const OperationalReportScreen({super.key});
@@ -59,11 +60,11 @@ class _MemberStatusSection extends ConsumerWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(child: _StatCard(label: 'Aktif', count: active, color: Colors.green)),
+                Expanded(child: _StatCard(label: 'Aktif', count: active, color: AppColors.statusActive)),
                 const SizedBox(width: 8),
-                Expanded(child: _StatCard(label: 'Segera Habis', count: expiringSoon, color: Colors.orange)),
+                Expanded(child: _StatCard(label: 'Segera Habis', count: expiringSoon, color: AppColors.statusWarning)),
                 const SizedBox(width: 8),
-                Expanded(child: _StatCard(label: 'Kedaluwarsa', count: expired, color: Colors.red)),
+                Expanded(child: _StatCard(label: 'Kedaluwarsa', count: expired, color: AppColors.statusDanger)),
               ],
             ),
           ],
@@ -128,7 +129,7 @@ class _CheckinTrendSection extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 const SizedBox(height: 4),
                 Text('Hari ini: $todayCount check-in',
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.indigo)),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.emeraldBright)),
                 const SizedBox(height: 20),
                 SizedBox(
                   height: 180,
@@ -140,7 +141,7 @@ class _CheckinTrendSection extends ConsumerWidget {
                           BarChartGroupData(x: i, barRods: [
                             BarChartRodData(
                               toY: days[i].count.toDouble(),
-                              color: i == days.length - 1 ? Colors.indigo : Colors.indigo.shade200,
+                              color: i == days.length - 1 ? AppColors.emeraldBright : AppColors.emeraldDeep,
                               width: 20,
                               borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
                             ),
@@ -221,8 +222,8 @@ class _PopularClassesSection extends ConsumerWidget {
                                 child: LinearProgressIndicator(
                                   value: maxCount == 0 ? 0 : classes[i].bookingCount / maxCount,
                                   minHeight: 6,
-                                  backgroundColor: Colors.indigo.withOpacity(0.1),
-                                  valueColor: const AlwaysStoppedAnimation(Colors.indigo),
+                                  backgroundColor: AppColors.emeraldBright.withOpacity(0.15),
+                                  valueColor: const AlwaysStoppedAnimation(AppColors.emeraldBright),
                                 ),
                               ),
                             ],

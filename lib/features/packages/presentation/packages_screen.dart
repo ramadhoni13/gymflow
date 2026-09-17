@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../data/package_provider.dart';
 import '../domain/membership_package.dart';
 import '../../../shared/format_rupiah.dart';
+import '../../../core/theme/app_theme.dart';
 
 class PackagesScreen extends ConsumerWidget {
   const PackagesScreen({super.key});
@@ -54,7 +55,7 @@ class PackagesScreen extends ConsumerWidget {
               ref.read(packageFormControllerProvider.notifier).delete(package.id);
               Navigator.pop(context);
             },
-            child: const Text('Hapus', style: TextStyle(color: Colors.red)),
+            child: const Text('Hapus', style: TextStyle(color: AppColors.statusDanger)),
           ),
         ],
       ),
@@ -109,14 +110,14 @@ class _PackageCard extends StatelessWidget {
                 discountBadge: package.hasAnnualDiscount
                     ? 'Ekstra ${package.annualDiscountType == DiscountType.percentage ? '${package.annualDiscountValue!.toStringAsFixed(0)}%' : formatRupiah(package.annualDiscountValue!)}'
                     : null,
-                badgeColor: Colors.green,
+                badgeColor: AppColors.emeraldBright,
               ),
               if (package.hasAnnualDiscount && package.annualSavingsVsFullMonthly > 0)
                 Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Text(
                     'Hemat ${formatRupiah(package.annualSavingsVsFullMonthly)} dibanding bayar bulanan',
-                    style: const TextStyle(fontSize: 12, color: Colors.green, fontWeight: FontWeight.w500),
+                    style: const TextStyle(fontSize: 12, color: AppColors.emeraldBright, fontWeight: FontWeight.w500),
                   ),
                 ),
               if (package.bonus != null && package.bonus!.isNotEmpty)
@@ -131,7 +132,7 @@ class _PackageCard extends StatelessWidget {
                     package.description!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    style: const TextStyle(fontSize: 12, color: AppColors.muted),
                   ),
                 ),
             ],
@@ -154,31 +155,42 @@ class _PriceRow extends StatelessWidget {
     this.originalPrice,
     required this.finalPrice,
     this.discountBadge,
-    this.badgeColor = Colors.orange,
+    this.badgeColor = AppColors.gold,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 8,
+      runSpacing: 4,
       children: [
-        SizedBox(width: 150, child: Text(label, style: const TextStyle(fontSize: 13, color: Colors.grey))),
-        if (originalPrice != null && originalPrice != finalPrice) ...[
-          Text(
-            formatRupiah(originalPrice!),
-            style: const TextStyle(decoration: TextDecoration.lineThrough, color: Colors.grey, fontSize: 13),
-          ),
-          const SizedBox(width: 6),
-        ],
-        Text(formatRupiah(finalPrice), style: const TextStyle(fontWeight: FontWeight.w600)),
-        if (discountBadge != null) ...[
-          const SizedBox(width: 6),
-          Chip(
-            label: Text(discountBadge!, style: const TextStyle(color: Colors.white, fontSize: 10)),
-            backgroundColor: badgeColor,
-            visualDensity: VisualDensity.compact,
-            padding: EdgeInsets.zero,
-          ),
-        ],
+        SizedBox(
+          width: 140,
+          child: Text(label, style: const TextStyle(fontSize: 13, color: AppColors.muted)),
+        ),
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 6,
+          children: [
+            if (originalPrice != null && originalPrice != finalPrice)
+              Text(
+                formatRupiah(originalPrice!),
+                style: const TextStyle(
+                    decoration: TextDecoration.lineThrough, color: AppColors.muted, fontSize: 13),
+              ),
+            Text(formatRupiah(finalPrice), style: const TextStyle(fontWeight: FontWeight.w600)),
+            if (discountBadge != null)
+              Chip(
+                label: Text(discountBadge!,
+                    style: const TextStyle(
+                        color: AppColors.ink, fontSize: 10, fontWeight: FontWeight.w600)),
+                backgroundColor: badgeColor,
+                visualDensity: VisualDensity.compact,
+                padding: EdgeInsets.zero,
+              ),
+          ],
+        ),
       ],
     );
   }

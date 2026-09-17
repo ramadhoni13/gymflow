@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../data/member_provider.dart';
 import '../domain/member.dart';
+import '../../../core/theme/app_theme.dart';
 
 class MemberFormScreen extends ConsumerStatefulWidget {
   final Member? existingMember;
@@ -97,7 +98,7 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
                 child: formState.isLoading
                     ? const SizedBox(
                         height: 18, width: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.ink),
                       )
                     : Text(_isNew ? 'Simpan Member' : 'Simpan Perubahan'),
               ),

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../data/member_provider.dart';
 import '../domain/member.dart';
+import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class MembersScreen extends ConsumerWidget {
   const MembersScreen({super.key});
@@ -13,7 +15,8 @@ class MembersScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Member')),
-      body: Column(
+      body: ResponsiveCenter(
+        child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(12),
@@ -52,6 +55,7 @@ class MembersScreen extends ConsumerWidget {
             ),
           ),
         ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/members/new'),
@@ -66,7 +70,7 @@ class MembersScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Hapus member?'),
-        content: Text('Data ${member.name} akan dihapus permanen, anda yakin?'),
+        content: Text('Data ${member.name} akan dihapus permanen.'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context), child: const Text('Batal')),
           TextButton(
@@ -92,9 +96,9 @@ class _MemberTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (label, color) = switch (member.status) {
-      MembershipStatus.active => ('Aktif', Colors.green),
-      MembershipStatus.expiringSoon => ('Segera Habis', Colors.orange),
-      MembershipStatus.expired => ('Kedaluwarsa', Colors.red),
+      MembershipStatus.active => ('Aktif', AppColors.statusActive),
+      MembershipStatus.expiringSoon => ('Segera Habis', AppColors.statusWarning),
+      MembershipStatus.expired => ('Kedaluwarsa', AppColors.statusDanger),
     };
 
     return ListTile(
@@ -105,7 +109,7 @@ class _MemberTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Chip(
-            label: Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
+            label: Text(label, style: const TextStyle(color: AppColors.ink, fontSize: 12, fontWeight: FontWeight.w600)),
             backgroundColor: color,
             padding: EdgeInsets.zero,
             visualDensity: VisualDensity.compact,

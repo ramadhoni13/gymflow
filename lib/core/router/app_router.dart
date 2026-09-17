@@ -23,6 +23,7 @@ import '../../features/staff/presentation/staff_screen.dart';
 import '../../features/staff/presentation/staff_form_screen.dart';
 import '../../features/reports/presentation/financial_report_screen.dart';
 import '../../features/reports/presentation/operational_report_screen.dart';
+import '../../features/settings/presentation/gym_settings_screen.dart';
 
 /// Setiap route yang butuh proteksi didaftarkan dengan featureKey-nya,
 /// dicocokkan ke UserRoleX.canAccess().
@@ -116,6 +117,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/reports/operational',
         builder: (context, state) => const OperationalReportScreen(),
       ),
+      GoRoute(path: '/settings', builder: (context, state) => const GymSettingsScreen()),
       // Tambahkan route modul lain di sini, contoh:
       // GoRoute(path: '/staff-management', builder: (context, state) => const StaffManagementScreen()),
     ],

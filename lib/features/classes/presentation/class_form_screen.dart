@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../data/class_schedule_provider.dart';
 import '../domain/class_schedule.dart';
+import '../../../core/theme/app_theme.dart';
 
 class ClassFormScreen extends ConsumerStatefulWidget {
   final ClassSchedule? existingClass;
@@ -140,7 +141,7 @@ class _ClassFormScreenState extends ConsumerState<ClassFormScreen> {
                 child: formState.isLoading
                     ? const SizedBox(
                         height: 18, width: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.ink),
                       )
                     : Text(_isNew ? 'Simpan Kelas' : 'Simpan Perubahan'),
               ),

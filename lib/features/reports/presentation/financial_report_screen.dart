@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../data/reports_provider.dart';
 import '../../../shared/format_rupiah.dart';
+import '../../../core/theme/app_theme.dart';
 
 class FinancialReportScreen extends ConsumerWidget {
   const FinancialReportScreen({super.key});
@@ -61,7 +62,7 @@ class _RevenueMonthSection extends ConsumerWidget {
                 const SizedBox(height: 4),
                 Text('Total: ${formatRupiah(total)}',
                     style: const TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.bold, color: Colors.indigo)),
+                        fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.emeraldBright)),
                 const SizedBox(height: 20),
                 SizedBox(
                   height: 220,
@@ -75,7 +76,7 @@ class _RevenueMonthSection extends ConsumerWidget {
                                 BarChartGroupData(x: i, barRods: [
                                   BarChartRodData(
                                     toY: months[i].total,
-                                    color: Colors.indigo,
+                                    color: AppColors.emeraldBright,
                                     width: 18,
                                     borderRadius:
                                         const BorderRadius.vertical(top: Radius.circular(4)),
@@ -145,7 +146,7 @@ class _RevenueByMethodSection extends ConsumerWidget {
                     label: m.label,
                     value: m.total,
                     fraction: total == 0 ? 0 : m.total / total,
-                    color: Colors.teal,
+                    color: AppColors.gold,
                   ),
               ],
             );
@@ -183,7 +184,7 @@ class _RevenueByPackageSection extends ConsumerWidget {
                     label: pkg.packageName,
                     value: pkg.total,
                     fraction: total == 0 ? 0 : pkg.total / total,
-                    color: Colors.deepPurple,
+                    color: AppColors.emeraldBright,
                   ),
               ],
             );
@@ -217,7 +218,10 @@ class _BreakdownBar extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(label),
+              Expanded(
+                child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
+              ),
+              const SizedBox(width: 8),
               Text(formatRupiah(value), style: const TextStyle(fontWeight: FontWeight.w600)),
             ],
           ),

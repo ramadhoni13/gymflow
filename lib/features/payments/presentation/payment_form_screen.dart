@@ -9,6 +9,8 @@ import '../../members/domain/member.dart';
 import '../../packages/data/package_provider.dart';
 import '../../packages/domain/membership_package.dart';
 import '../../../shared/format_rupiah.dart';
+import '../../settings/data/gym_settings_provider.dart';
+import '../../../core/theme/app_theme.dart';
 
 class PaymentFormScreen extends ConsumerStatefulWidget {
   const PaymentFormScreen({super.key});
@@ -82,24 +84,30 @@ class _PaymentFormScreenState extends ConsumerState<PaymentFormScreen> {
             ),
             if (_selectedPackage != null) ...[
               const SizedBox(height: 12),
-              SegmentedButton<BillingType>(
-                segments: [
-                  ButtonSegment(
-                    value: BillingType.monthly,
-                    label: Text('Bulanan\n${formatRupiah(_selectedPackage!.monthlyFinalPrice)}',
-                        textAlign: TextAlign.center),
+              SizedBox(
+                width: double.infinity,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SegmentedButton<BillingType>(
+                    segments: [
+                      ButtonSegment(
+                        value: BillingType.monthly,
+                        label: Text('Bulanan\n${formatRupiah(_selectedPackage!.monthlyFinalPrice)}',
+                            textAlign: TextAlign.center),
+                      ),
+                      ButtonSegment(
+                        value: BillingType.annual,
+                        label: Text('Tahunan\n${formatRupiah(_selectedPackage!.annualFinalPrice)}',
+                            textAlign: TextAlign.center),
+                      ),
+                    ],
+                    selected: {_billingType},
+                    onSelectionChanged: (selection) {
+                      setState(() => _billingType = selection.first);
+                      _recalculateAmount();
+                    },
                   ),
-                  ButtonSegment(
-                    value: BillingType.annual,
-                    label: Text('Tahunan\n${formatRupiah(_selectedPackage!.annualFinalPrice)}',
-                        textAlign: TextAlign.center),
-                  ),
-                ],
-                selected: {_billingType},
-                onSelectionChanged: (selection) {
-                  setState(() => _billingType = selection.first);
-                  _recalculateAmount();
-                },
+                ),
               ),
             ],
             const Divider(height: 32),
@@ -141,7 +149,7 @@ class _PaymentFormScreenState extends ConsumerState<PaymentFormScreen> {
               child: formState.isLoading
                   ? const SizedBox(
                       height: 18, width: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                      child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.ink))
                   : const Text('Simpan & Buat Invoice'),
             ),
           ],
@@ -216,7 +224,11 @@ class _PaymentFormScreenState extends ConsumerState<PaymentFormScreen> {
             child: const Text('Tutup'),
           ),
           FilledButton.icon(
-            onPressed: () => Printing.layoutPdf(onLayout: (format) => buildInvoicePdf(payment)),
+            onPressed: () {
+              final settings = ref.read(gymSettingsStreamProvider).valueOrNull;
+              Printing.layoutPdf(
+                  onLayout: (format) => buildInvoicePdf(payment, gymSettings: settings));
+            },
             icon: const Icon(Icons.picture_as_pdf),
             label: const Text('Lihat/Cetak Invoice'),
           ),

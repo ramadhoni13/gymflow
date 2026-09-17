@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../data/staff_provider.dart';
 import '../domain/staff_member.dart';
 import '../../auth/domain/user_role.dart';
+import '../../../core/theme/app_theme.dart';
 
 class StaffScreen extends ConsumerWidget {
   const StaffScreen({super.key});
@@ -33,7 +34,7 @@ class StaffScreen extends ConsumerWidget {
                 trailing: Chip(
                   label: Text(s.role.label),
                   backgroundColor:
-                      s.role == UserRole.admin ? Colors.indigo.shade100 : Colors.teal.shade100,
+                      s.role == UserRole.admin ? AppColors.gold.withOpacity(0.18) : AppColors.emeraldBright.withOpacity(0.18),
                 ),
                 onTap: () => _openEditSheet(context, ref, s),
               );
@@ -90,7 +91,7 @@ class _EditStaffSheetState extends ConsumerState<_EditStaffSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.staff.email, style: const TextStyle(color: Colors.grey)),
+          Text(widget.staff.email, style: const TextStyle(color: AppColors.muted)),
           const SizedBox(height: 12),
           TextField(
             controller: _nameController,
@@ -112,8 +113,8 @@ class _EditStaffSheetState extends ConsumerState<_EditStaffSheet> {
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: actionState.isLoading ? null : _confirmDelete,
-                  icon: const Icon(Icons.delete_outline, color: Colors.red),
-                  label: const Text('Hapus Akun', style: TextStyle(color: Colors.red)),
+                  icon: const Icon(Icons.delete_outline, color: AppColors.statusDanger),
+                  label: const Text('Hapus Akun', style: TextStyle(color: AppColors.statusDanger)),
                 ),
               ),
               const SizedBox(width: 12),
@@ -123,7 +124,7 @@ class _EditStaffSheetState extends ConsumerState<_EditStaffSheet> {
                   child: actionState.isLoading
                       ? const SizedBox(
                           height: 18, width: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.ink))
                       : const Text('Simpan'),
                 ),
               ),
@@ -155,7 +156,7 @@ class _EditStaffSheetState extends ConsumerState<_EditStaffSheet> {
           TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Batal')),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Hapus', style: TextStyle(color: Colors.red)),
+            child: const Text('Hapus', style: TextStyle(color: AppColors.statusDanger)),
           ),
         ],
       ),

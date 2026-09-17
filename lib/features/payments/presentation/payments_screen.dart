@@ -6,6 +6,7 @@ import '../data/payment_provider.dart';
 import '../data/invoice_pdf.dart';
 import '../domain/payment.dart';
 import '../../../shared/format_rupiah.dart';
+import '../../settings/data/gym_settings_provider.dart';
 
 class PaymentsScreen extends ConsumerWidget {
   const PaymentsScreen({super.key});
@@ -40,7 +41,7 @@ class PaymentsScreen extends ConsumerWidget {
                   children: [
                     Text(formatRupiah(p.amount), style: const TextStyle(fontWeight: FontWeight.w600)),
                     TextButton.icon(
-                      onPressed: () => _viewInvoice(p),
+                      onPressed: () => _viewInvoice(ref, p),
                       icon: const Icon(Icons.picture_as_pdf, size: 16),
                       label: const Text('Invoice'),
                       style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero),
@@ -60,7 +61,8 @@ class PaymentsScreen extends ConsumerWidget {
     );
   }
 
-  void _viewInvoice(Payment payment) {
-    Printing.layoutPdf(onLayout: (format) => buildInvoicePdf(payment));
+  void _viewInvoice(WidgetRef ref, Payment payment) {
+    final settings = ref.read(gymSettingsStreamProvider).valueOrNull;
+    Printing.layoutPdf(onLayout: (format) => buildInvoicePdf(payment, gymSettings: settings));
   }
 }
