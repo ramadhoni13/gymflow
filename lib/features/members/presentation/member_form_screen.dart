@@ -21,6 +21,7 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
   late final TextEditingController _phoneController;
   late final TextEditingController _emailController;
   late final TextEditingController _packageController;
+  late final TextEditingController _pinController;
   late DateTime _joinDate;
   late DateTime _endDate;
 
@@ -34,6 +35,7 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
     _phoneController = TextEditingController(text: m?.phone ?? '');
     _emailController = TextEditingController(text: m?.email ?? '');
     _packageController = TextEditingController(text: m?.packageName ?? '');
+    _pinController = TextEditingController(text: m?.pin ?? '');
     _joinDate = m?.joinDate ?? DateTime.now();
     _endDate = m?.membershipEndDate ?? DateTime.now().add(const Duration(days: 30));
   }
@@ -84,6 +86,26 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
                 validator: (v) => (v == null || v.isEmpty) ? 'Wajib diisi' : null,
               ),
               const SizedBox(height: 12),
+              TextFormField(
+                controller: _pinController,
+                decoration: const InputDecoration(
+                  labelText: 'PIN Check-in Mandiri (4 digit, opsional)',
+                  helperText:
+                      'Kalau diisi, member wajib masukkan PIN ini (selain HP) saat self check-in tanpa login. Kosongkan kalau tidak perlu PIN.',
+                  helperMaxLines: 3,
+                  counterText: '',
+                ),
+                keyboardType: TextInputType.number,
+                maxLength: 4,
+                validator: (v) {
+                  if (v == null || v.isEmpty) return null; // opsional
+                  if (v.length != 4 || int.tryParse(v) == null) {
+                    return 'PIN harus 4 digit angka';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12),
               _DatePickerField(
                 label: 'Tanggal Bergabung',
                 date: _joinDate,
@@ -124,6 +146,7 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
       joinDate: _joinDate,
       packageName: _packageController.text.trim(),
       membershipEndDate: _endDate,
+      pin: _pinController.text.trim().isEmpty ? null : _pinController.text.trim(),
     );
 
     final success = await ref

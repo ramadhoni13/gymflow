@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../data/auth_provider.dart';
 import '../../../core/theme/app_theme.dart';
 
@@ -121,6 +122,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ],
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () => context.push('/self-checkin'),
+                    child: const Text('Member? Check-in di sini →'),
                   ),
                 ],
               ),

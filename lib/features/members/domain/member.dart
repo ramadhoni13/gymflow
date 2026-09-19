@@ -9,6 +9,7 @@ class Member {
   final String packageName;
   final DateTime membershipEndDate;
   final String? notes;
+  final String? pin;
 
   const Member({
     required this.id,
@@ -19,6 +20,7 @@ class Member {
     required this.packageName,
     required this.membershipEndDate,
     this.notes,
+    this.pin,
   });
 
   MembershipStatus get status {
@@ -38,6 +40,7 @@ class Member {
       packageName: map['package_name'] as String,
       membershipEndDate: DateTime.parse(map['membership_end_date'] as String),
       notes: map['notes'] as String?,
+      pin: map['pin'] as String?,
     );
   }
 
@@ -50,6 +53,7 @@ class Member {
       'package_name': packageName,
       'membership_end_date': membershipEndDate.toIso8601String(),
       'notes': notes,
+      'pin': pin,
     };
   }
 
@@ -61,6 +65,7 @@ class Member {
     String? packageName,
     DateTime? membershipEndDate,
     String? notes,
+    String? pin,
   }) {
     return Member(
       id: id,
@@ -71,6 +76,7 @@ class Member {
       packageName: packageName ?? this.packageName,
       membershipEndDate: membershipEndDate ?? this.membershipEndDate,
       notes: notes ?? this.notes,
+      pin: pin ?? this.pin,
     );
   }
 }

@@ -24,6 +24,7 @@ import '../../features/staff/presentation/staff_form_screen.dart';
 import '../../features/reports/presentation/financial_report_screen.dart';
 import '../../features/reports/presentation/operational_report_screen.dart';
 import '../../features/settings/presentation/gym_settings_screen.dart';
+import '../../features/self_checkin/presentation/self_checkin_screen.dart';
 
 /// Setiap route yang butuh proteksi didaftarkan dengan featureKey-nya,
 /// dicocokkan ke UserRoleX.canAccess().
@@ -41,9 +42,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       final authState = ref.read(authControllerProvider);
       final isLoggedIn = authState.valueOrNull != null;
       final isLoggingIn = state.matchedLocation == '/login';
+      // /self-checkin sengaja PUBLIK — member melakukan check-in mandiri
+      // lewat nomor HP tanpa perlu akun/login sama sekali.
+      final isPublicRoute = isLoggingIn || state.matchedLocation == '/self-checkin';
 
       if (!isLoggedIn) {
-        return isLoggingIn ? null : '/login';
+        return isPublicRoute ? null : '/login';
       }
       if (isLoggingIn) {
         return '/dashboard';
@@ -58,6 +62,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     },
     routes: [
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
+      GoRoute(path: '/self-checkin', builder: (context, state) => const SelfCheckinScreen()),
       GoRoute(path: '/dashboard', builder: (context, state) => const DashboardScreen()),
       GoRoute(
         path: '/unauthorized',
