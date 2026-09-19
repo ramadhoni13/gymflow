@@ -5,6 +5,7 @@ import '../data/package_provider.dart';
 import '../domain/membership_package.dart';
 import '../../../shared/format_rupiah.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class PackagesScreen extends ConsumerWidget {
   const PackagesScreen({super.key});
@@ -15,7 +16,8 @@ class PackagesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Paket Membership')),
-      body: packagesAsync.when(
+      body: ResponsiveCenter(
+        child: packagesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, _) => Center(child: Text('Gagal memuat data: $err')),
         data: (packages) {
@@ -33,6 +35,7 @@ class PackagesScreen extends ConsumerWidget {
             ),
           );
         },
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/packages/new'),

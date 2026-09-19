@@ -5,6 +5,7 @@ import '../data/class_schedule_provider.dart';
 import '../domain/class_schedule.dart';
 import '../../auth/data/auth_provider.dart';
 import '../../auth/domain/user_role.dart';
+import '../../../shared/responsive.dart';
 
 class ClassesScreen extends ConsumerWidget {
   const ClassesScreen({super.key});
@@ -17,7 +18,7 @@ class ClassesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Jadwal Kelas')),
-      body: groupedAsync.when(
+      body: ResponsiveCenter(child: groupedAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, _) => Center(child: Text('Gagal memuat data: $err')),
         data: (grouped) {
@@ -37,7 +38,7 @@ class ClassesScreen extends ConsumerWidget {
             ],
           );
         },
-      ),
+      )),
       floatingActionButton: canManage
           ? FloatingActionButton.extended(
               onPressed: () => context.push('/class-management/new'),

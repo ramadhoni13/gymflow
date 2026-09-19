@@ -4,6 +4,7 @@ import '../data/checkin_provider.dart';
 import '../domain/check_in.dart';
 import '../../members/domain/member.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class CheckinScreen extends ConsumerWidget {
   const CheckinScreen({super.key});
@@ -12,7 +13,8 @@ class CheckinScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Check-in Member')),
-      body: Column(
+      body: ResponsiveCenter(
+        child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(12),
@@ -29,6 +31,7 @@ class CheckinScreen extends ConsumerWidget {
           ),
           Expanded(child: _SearchResultsOrHistory(ref: ref)),
         ],
+        ),
       ),
     );
   }

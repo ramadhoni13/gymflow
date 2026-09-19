@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import '../data/reports_provider.dart';
 import '../domain/report_models.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class OperationalReportScreen extends ConsumerWidget {
   const OperationalReportScreen({super.key});
@@ -12,7 +13,8 @@ class OperationalReportScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Laporan Operasional')),
-      body: RefreshIndicator(
+      body: ResponsiveCenter(
+        child: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(memberStatusCountsProvider);
           ref.invalidate(checkinsLast7DaysProvider);
@@ -27,6 +29,7 @@ class OperationalReportScreen extends ConsumerWidget {
             SizedBox(height: 24),
             _PopularClassesSection(),
           ],
+        ),
         ),
       ),
     );

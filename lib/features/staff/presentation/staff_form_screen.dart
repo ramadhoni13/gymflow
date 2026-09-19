@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../data/staff_provider.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class StaffFormScreen extends ConsumerStatefulWidget {
   const StaffFormScreen({super.key});
@@ -39,7 +40,9 @@ class _StaffFormScreenState extends ConsumerState<StaffFormScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Tambah Staf')),
-      body: Padding(
+      body: ResponsiveCenter(
+        maxWidth: 640,
+        child: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
@@ -97,6 +100,7 @@ class _StaffFormScreenState extends ConsumerState<StaffFormScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

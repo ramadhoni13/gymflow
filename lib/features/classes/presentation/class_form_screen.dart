@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../data/class_schedule_provider.dart';
 import '../domain/class_schedule.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class ClassFormScreen extends ConsumerStatefulWidget {
   final ClassSchedule? existingClass;
@@ -69,7 +70,9 @@ class _ClassFormScreenState extends ConsumerState<ClassFormScreen> {
             ),
         ],
       ),
-      body: Padding(
+      body: ResponsiveCenter(
+        maxWidth: 640,
+        child: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
@@ -148,6 +151,7 @@ class _ClassFormScreenState extends ConsumerState<ClassFormScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

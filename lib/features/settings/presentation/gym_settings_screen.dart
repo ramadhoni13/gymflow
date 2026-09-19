@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/gym_settings_provider.dart';
 import '../domain/gym_settings.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class GymSettingsScreen extends ConsumerWidget {
   const GymSettingsScreen({super.key});
@@ -13,10 +14,13 @@ class GymSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Pengaturan Gym')),
-      body: settingsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, _) => Center(child: Text('Gagal memuat data: $err')),
-        data: (settings) => _GymSettingsForm(settings: settings),
+      body: ResponsiveCenter(
+        maxWidth: 640,
+        child: settingsAsync.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (err, _) => Center(child: Text('Gagal memuat data: $err')),
+          data: (settings) => _GymSettingsForm(settings: settings),
+        ),
       ),
     );
   }

@@ -5,6 +5,7 @@ import '../data/staff_provider.dart';
 import '../domain/staff_member.dart';
 import '../../auth/domain/user_role.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class StaffScreen extends ConsumerWidget {
   const StaffScreen({super.key});
@@ -15,7 +16,7 @@ class StaffScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Manajemen Staf')),
-      body: staffAsync.when(
+      body: ResponsiveCenter(child: staffAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, _) => Center(child: Text('Gagal memuat data: $err')),
         data: (staffList) {
@@ -41,7 +42,7 @@ class StaffScreen extends ConsumerWidget {
             },
           );
         },
-      ),
+      )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/staff-management/new'),
         icon: const Icon(Icons.person_add),

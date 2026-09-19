@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../data/member_provider.dart';
 import '../domain/member.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class MemberFormScreen extends ConsumerStatefulWidget {
   final Member? existingMember;
@@ -50,7 +51,9 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(_isNew ? 'Tambah Member' : 'Edit Member')),
-      body: Padding(
+      body: ResponsiveCenter(
+        maxWidth: 640,
+        child: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
@@ -105,6 +108,7 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

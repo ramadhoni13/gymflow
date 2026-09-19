@@ -7,6 +7,7 @@ import '../data/invoice_pdf.dart';
 import '../domain/payment.dart';
 import '../../../shared/format_rupiah.dart';
 import '../../settings/data/gym_settings_provider.dart';
+import '../../../shared/responsive.dart';
 
 class PaymentsScreen extends ConsumerWidget {
   const PaymentsScreen({super.key});
@@ -17,7 +18,7 @@ class PaymentsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Pembayaran')),
-      body: paymentsAsync.when(
+      body: ResponsiveCenter(child: paymentsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, _) => Center(child: Text('Gagal memuat data: $err')),
         data: (payments) {
@@ -52,7 +53,7 @@ class PaymentsScreen extends ConsumerWidget {
             },
           );
         },
-      ),
+      )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/payments/new'),
         icon: const Icon(Icons.add),

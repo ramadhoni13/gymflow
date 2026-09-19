@@ -5,6 +5,7 @@ import '../data/package_provider.dart';
 import '../domain/membership_package.dart';
 import '../../../shared/format_rupiah.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class PackageFormScreen extends ConsumerStatefulWidget {
   final MembershipPackage? existingPackage;
@@ -88,7 +89,9 @@ class _PackageFormScreenState extends ConsumerState<PackageFormScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(_isNew ? 'Tambah Paket' : 'Edit Paket')),
-      body: Padding(
+      body: ResponsiveCenter(
+        maxWidth: 640,
+        child: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
@@ -216,6 +219,7 @@ class _PackageFormScreenState extends ConsumerState<PackageFormScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import '../data/reports_provider.dart';
 import '../../../shared/format_rupiah.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/responsive.dart';
 
 class FinancialReportScreen extends ConsumerWidget {
   const FinancialReportScreen({super.key});
@@ -12,7 +13,8 @@ class FinancialReportScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Laporan Keuangan')),
-      body: RefreshIndicator(
+      body: ResponsiveCenter(
+        child: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(revenueByMonthProvider);
           ref.invalidate(revenueByMethodProvider);
@@ -27,6 +29,7 @@ class FinancialReportScreen extends ConsumerWidget {
             SizedBox(height: 24),
             _RevenueByPackageSection(),
           ],
+        ),
         ),
       ),
     );

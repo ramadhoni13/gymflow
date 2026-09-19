@@ -10,6 +10,7 @@ import '../../packages/data/package_provider.dart';
 import '../../packages/domain/membership_package.dart';
 import '../../../shared/format_rupiah.dart';
 import '../../settings/data/gym_settings_provider.dart';
+import '../../../shared/responsive.dart';
 import '../../../core/theme/app_theme.dart';
 
 class PaymentFormScreen extends ConsumerStatefulWidget {
@@ -52,7 +53,9 @@ class _PaymentFormScreenState extends ConsumerState<PaymentFormScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Catat Pembayaran')),
-      body: Padding(
+      body: ResponsiveCenter(
+        maxWidth: 640,
+        child: Padding(
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
@@ -154,6 +157,7 @@ class _PaymentFormScreenState extends ConsumerState<PaymentFormScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
