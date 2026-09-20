@@ -34,4 +34,58 @@ class ReportsRepository {
     final data = await _client.rpc('rpc_popular_classes', params: {'result_limit': limit});
     return (data as List).map((e) => PopularClass.fromMap(e as Map<String, dynamic>)).toList();
   }
+
+  String _dateOnly(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
+  Future<List<RevenueTrendPoint>> revenueTrendRange({
+    required DateTime start,
+    required DateTime end,
+    required String granularity,
+  }) async {
+    final data = await _client.rpc('rpc_revenue_trend_range', params: {
+      'start_date': _dateOnly(start),
+      'end_date': _dateOnly(end),
+      'granularity': granularity,
+    });
+    return (data as List).map((e) => RevenueTrendPoint.fromMap(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<List<MethodRevenue>> revenueByMethodPeriod({required DateTime start, required DateTime end}) async {
+    final data = await _client.rpc('rpc_revenue_by_method_period',
+        params: {'start_date': _dateOnly(start), 'end_date': _dateOnly(end)});
+    return (data as List).map((e) => MethodRevenue.fromMap(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<List<PackageRevenue>> revenueByPackagePeriod({required DateTime start, required DateTime end}) async {
+    final data = await _client.rpc('rpc_revenue_by_package_period',
+        params: {'start_date': _dateOnly(start), 'end_date': _dateOnly(end)});
+    return (data as List).map((e) => PackageRevenue.fromMap(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<List<CheckinTrendPoint>> checkinsTrendRange({
+    required DateTime start,
+    required DateTime end,
+    required String granularity,
+  }) async {
+    final data = await _client.rpc('rpc_checkins_trend_range', params: {
+      'start_date': _dateOnly(start),
+      'end_date': _dateOnly(end),
+      'granularity': granularity,
+    });
+    return (data as List).map((e) => CheckinTrendPoint.fromMap(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<List<PopularClass>> popularClassesPeriod({
+    required DateTime start,
+    required DateTime end,
+    int limit = 5,
+  }) async {
+    final data = await _client.rpc('rpc_popular_classes_period', params: {
+      'start_date': _dateOnly(start),
+      'end_date': _dateOnly(end),
+      'result_limit': limit,
+    });
+    return (data as List).map((e) => PopularClass.fromMap(e as Map<String, dynamic>)).toList();
+  }
 }
