@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../data/auth_provider.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/theme/brand_config.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -47,16 +48,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Container(width: 40, height: 2, color: AppColors.gold),
                   const SizedBox(height: 20),
                   Text(
-                    'GYM MANAGEMENT',
+                    BrandConfig.appName,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           letterSpacing: 1.2,
                         ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 6),
-                  const Text(
-                    'Portal khusus pengelola',
-                    style: TextStyle(color: AppColors.muted, fontSize: 13),
+                  Text(
+                    BrandConfig.appTagline,
+                    style: const TextStyle(color: AppColors.muted, fontSize: 13),
                   ),
                   const SizedBox(height: 40),
                   Container(

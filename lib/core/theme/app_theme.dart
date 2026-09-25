@@ -4,24 +4,32 @@ import 'package:google_fonts/google_fonts.dart';
 /// Palet warna inti — emerald gelap + hitam hangat + emas pudar sebagai
 /// aksen eksklusif. Sengaja BUKAN hitam pekat (#000) atau hijau neon,
 /// supaya kesannya butik/mewah, bukan tema "gamer/tech".
+///
+/// ============================================================
+/// UNTUK GANTI WARNA BRAND KE KLIEN LAIN:
+/// Cuma perlu edit 2 blok yang ditandai "<<< BRAND KLIEN" di bawah
+/// (emerald & gold). JANGAN ubah blok lain (latar, teks, status) kecuali
+/// klien memang minta ganti dari tema gelap sepenuhnya — itu perubahan
+/// lebih besar, bukan sekadar ganti warna.
+/// ============================================================
 class AppColors {
   AppColors._();
 
-  // Latar & permukaan
+  // Latar & permukaan (biasanya TIDAK perlu diubah per klien)
   static const ink = Color(0xFF0B0F0D); // background utama
   static const surface = Color(0xFF141917); // kartu, app bar
   static const surfaceVariant = Color(0xFF1E2422); // field, divider, elemen sekunder
 
-  // Emerald (warna utama brand)
+  // <<< BRAND KLIEN — warna utama (tombol, ikon aktif, grafik)
   static const emerald = Color(0xFF1F6F52); // primary
   static const emeraldBright = Color(0xFF34A66F); // aksen interaktif/hover
   static const emeraldDeep = Color(0xFF123D2C); // varian gelap (container)
 
-  // Emas pudar — dipakai SANGAT SEDIKIT, cuma untuk hal yang benar-benar
-  // ingin ditonjolkan sebagai "eksklusif" (badge diskon tahunan, dst).
+  // <<< BRAND KLIEN — warna aksen, dipakai SANGAT SEDIKIT (badge diskon
+  // tahunan, wordmark login, Laporan Keuangan)
   static const gold = Color(0xFFC9A227);
 
-  // Teks
+  // Teks (biasanya TIDAK perlu diubah per klien)
   static const ivory = Color(0xFFEDEFEC); // teks utama di atas gelap
   static const muted = Color(0xFF9AA39D); // teks sekunder
 

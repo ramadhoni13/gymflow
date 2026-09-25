@@ -5,6 +5,7 @@ import '../data/member_provider.dart';
 import '../domain/member.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/responsive.dart';
+import '../../packages/data/package_provider.dart';
 
 class MemberFormScreen extends ConsumerStatefulWidget {
   final Member? existingMember;
@@ -20,8 +21,8 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
   late final TextEditingController _nameController;
   late final TextEditingController _phoneController;
   late final TextEditingController _emailController;
-  late final TextEditingController _packageController;
   late final TextEditingController _pinController;
+  String? _selectedPackageName;
   late DateTime _joinDate;
   late DateTime _endDate;
 
@@ -34,7 +35,7 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
     _nameController = TextEditingController(text: m?.name ?? '');
     _phoneController = TextEditingController(text: m?.phone ?? '');
     _emailController = TextEditingController(text: m?.email ?? '');
-    _packageController = TextEditingController(text: m?.packageName ?? '');
+    _selectedPackageName = m?.packageName;
     _pinController = TextEditingController(text: m?.pin ?? '');
     _joinDate = m?.joinDate ?? DateTime.now();
     _endDate = m?.membershipEndDate ?? DateTime.now().add(const Duration(days: 30));
@@ -80,10 +81,50 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 12),
-              TextFormField(
-                controller: _packageController,
-                decoration: const InputDecoration(labelText: 'Paket Membership'),
-                validator: (v) => (v == null || v.isEmpty) ? 'Wajib diisi' : null,
+              Consumer(
+                builder: (context, ref, _) {
+                  final packagesAsync = ref.watch(packagesStreamProvider);
+                  return packagesAsync.when(
+                    loading: () => const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: LinearProgressIndicator(),
+                    ),
+                    error: (err, _) => Text('Gagal memuat paket: $err'),
+                    data: (packages) {
+                      final matches = packages.any((p) => p.name == _selectedPackageName);
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DropdownButtonFormField<String>(
+                            value: matches ? _selectedPackageName : null,
+                            decoration: const InputDecoration(labelText: 'Paket Membership'),
+                            items: packages
+                                .map((p) => DropdownMenuItem(value: p.name, child: Text(p.name)))
+                                .toList(),
+                            onChanged: (v) => setState(() => _selectedPackageName = v),
+                            validator: (v) => (v == null || v.isEmpty) ? 'Pilih paket membership' : null,
+                          ),
+                          if (!matches && (_selectedPackageName?.isNotEmpty ?? false))
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: Text(
+                                "Paket lama \"$_selectedPackageName\" sudah tidak ada di daftar paket saat ini — silakan pilih paket yang masih berlaku.",
+                                style: const TextStyle(fontSize: 12, color: AppColors.statusWarning),
+                              ),
+                            ),
+                          if (packages.isEmpty)
+                            const Padding(
+                              padding: EdgeInsets.only(top: 6),
+                              child: Text(
+                                'Belum ada paket membership. Tambahkan dulu lewat menu Paket Membership.',
+                                style: TextStyle(fontSize: 12, color: AppColors.muted),
+                              ),
+                            ),
+                        ],
+                      );
+                    },
+                  );
+                },
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -144,7 +185,7 @@ class _MemberFormScreenState extends ConsumerState<MemberFormScreen> {
       phone: _phoneController.text.trim(),
       email: _emailController.text.trim().isEmpty ? null : _emailController.text.trim(),
       joinDate: _joinDate,
-      packageName: _packageController.text.trim(),
+      packageName: _selectedPackageName ?? '',
       membershipEndDate: _endDate,
       pin: _pinController.text.trim().isEmpty ? null : _pinController.text.trim(),
     );

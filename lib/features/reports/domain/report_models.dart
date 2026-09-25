@@ -126,7 +126,7 @@ class ReportDateRange {
       'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'
     ];
     String fmt(DateTime d) => '${d.day} ${months[d.month - 1]} ${d.year}';
-    return '${fmt(start)} — ${fmt(end)}';
+    return '${fmt(start)} - ${fmt(end)}';
   }
 
   /// Dipakai untuk nama file saat download (mis. 2026-01-01_2026-09-20).

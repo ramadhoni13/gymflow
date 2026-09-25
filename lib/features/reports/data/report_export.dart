@@ -51,7 +51,7 @@ Uint8List buildFinancialReportExcel({
     row += 1;
   }
 
-  writeTitle('${gymName?.isNotEmpty == true ? gymName : 'Laporan'} — Laporan Keuangan');
+  writeTitle('${gymName?.isNotEmpty == true ? gymName : 'Laporan'} - Laporan Keuangan');
   writeRow(['Periode', range.label]);
   writeRow(['Dicetak', _formatDate(DateTime.now())]);
   row += 1;
@@ -98,7 +98,7 @@ Future<Uint8List> buildFinancialReportPdf({
       build: (context) => [
         pw.Text(gymName?.isNotEmpty == true ? gymName! : 'Laporan Keuangan',
             style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
-        pw.Text('Laporan Keuangan — Periode ${range.label}', style: const pw.TextStyle(fontSize: 12)),
+        pw.Text('Laporan Keuangan - Periode ${range.label}', style: const pw.TextStyle(fontSize: 12)),
         pw.Text('Dicetak: ${_formatDate(DateTime.now())}',
             style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey700)),
         pw.SizedBox(height: 12),
@@ -182,7 +182,7 @@ Uint8List buildOperationalReportExcel({
     row += 1;
   }
 
-  writeTitle('${gymName?.isNotEmpty == true ? gymName : 'Laporan'} — Laporan Operasional');
+  writeTitle('${gymName?.isNotEmpty == true ? gymName : 'Laporan'} - Laporan Operasional');
   writeRow(['Periode', range.label]);
   writeRow(['Dicetak', _formatDate(DateTime.now())]);
   row += 1;
@@ -226,7 +226,7 @@ Future<Uint8List> buildOperationalReportPdf({
       build: (context) => [
         pw.Text(gymName?.isNotEmpty == true ? gymName! : 'Laporan Operasional',
             style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
-        pw.Text('Laporan Operasional — Periode ${range.label}', style: const pw.TextStyle(fontSize: 12)),
+        pw.Text('Laporan Operasional - Periode ${range.label}', style: const pw.TextStyle(fontSize: 12)),
         pw.Text('Dicetak: ${_formatDate(DateTime.now())}',
             style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey700)),
         pw.SizedBox(height: 16),
